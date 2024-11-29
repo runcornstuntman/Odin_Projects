@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Sign-up Form</title>
+</head>
+<body>
+    <!-- Image side -->
+    <div class="left-side">
+        <div class="logo-container">
+            <div class="logo">
+                <img class="logo-image" src="odin-lined.png" alt="The odin project lined logo">
+                Rainy time
+            </div>
+        </div>
+        <img class="left-side-image" src="wenniel_lun_rain.png" alt="Rain on glass with red and white lights reflecting through">
+    </div>
+    
+
+    <!-- Content side -->
+    <div class="right-side">
+        <header class="left-margin">
+            <p>This is not a real online service, merely an assessment piece for the Odin Project. No need for Lorem ipsum here.</p>
+            <p>You <em>know</em> you're tempted, don't you?</p>
+        </header>
+        <div class="form">
+            <div class="left-margin">
+                <legend>Let's do this!</legend>
+                <form action="post" id="registration">
+                    <label for="first_name">First Name
+                        <input type="text" name="first_name" id="first_name">
+                    </label>
+    
+                    <label for="last_name">Last Name
+                        <input type="text" name="last_name" id="last_name">
+                    </label>
+                    
+                    <label for="email">Email
+                        <input type="email" name="Email" id="email_address">
+                    </label>
+
+                    <label for="phone_number">Phone Number
+                        <input type="tel" id="phone_number" name="phone_number">
+                    </label>
+    
+                    <label for="password">Password
+                        <input type="password" name="password" id="password">
+                    </label>
+    
+                    <label for="confirm_password">Confirm Password
+                        <input type="password" name="confirm_password" id="confirm_password">
+                    </label>
+                </form>
+
+            </div>
+        </div>
+
+        <button class="left-margin" type="submit" form="registration">Create Account</button>
+        <div class="left-margin">
+            Are you registered already? <a href="#">Log in</a>!
+        </div>
+    </div>
+</body>
+</html>
