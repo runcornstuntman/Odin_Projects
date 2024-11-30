@@ -2,9 +2,11 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 10px;
-  width: 250px;
+  width: 400px;
   margin: 0 auto;
   padding: 10px;
+  border: 2px solid #000;
+  border-radius: 10px;
 }
 
 .screen {
