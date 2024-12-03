@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Etch-A-Sketch</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="header">
+        <button class="button" onclick="resetGrid()">Reset Grid</button>
+        <div class="header-text">Etch-A-Sketch</div>
+        <button class="button" onclick="resizeGrid()">Resize Grid</button>
+    </div>
+
+    <div class="container">
+        <ul>
+            <li><button class="button" onclick="setColorBlack()">Change to Black</button></li>
+            <li><button class="button" onclick="setColorWhite()">Change to White</button></li>
+            <li><button class="button" onclick="randomizeColor()">Change to Random Color</button></li>
+        </ul>
+
+        <div class="grid"></div>
+    </div>
+
+    <div class="footer">
+        <div class="footer-text">
+            Produced for The Odin Project by me
+        </div>
+    </div>
+
+
+    <script src="script.js"></script>
+</body>
+</html>
