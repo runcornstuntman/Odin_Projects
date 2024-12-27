@@ -88,17 +88,21 @@ function updateBookCount(book, isAdding) {
     updateLogs();
 }
 
-function updateCount(book){
-    if(book.read_or_not == true && readBooks != 0){
-        document.querySelector('.logs > :nth-child(2)').textContent = `Read books : ${--readBooks}`
-        document.querySelector('.logs > :last-child').textContent = `Unread books : ${++unreadBooks}`
+function updateCount(book) {
+    // Update the counts only if the book status is actually changing
+    if (book.read_or_not === true) {
+        if (unreadBooks > 0) {
+            unreadBooks--;
+            readBooks++;
+        }
+    } else {
+        if (readBooks > 0) {
+            readBooks--;
+            unreadBooks++;
+        }
     }
-    else if(book.read_or_not == false && unreadBooks != 0){
-        document.querySelector('.logs > :last-child').textContent = `Unread books : ${--unreadBooks}`
-        document.querySelector('.logs > :nth-child(2)').textContent = `Read books : ${++readBooks}`
-    }
+    updateLogs();
 }
-
 
 function createBook(name, author, pages, read) {
     let pageCount = parseInt(pages);
@@ -127,14 +131,18 @@ function createBook(name, author, pages, read) {
     read_check.textContent = book.read_or_not ? 'Read' : 'Not Read';
     read_check.classList.add(book.read_or_not ? 'read' : 'unread');
 
-    // bookCount(book);
 
-    read_check.onclick = function(){
-        book.read_or_not = !book.read_or_not; 
-        updateCount(book);
-        read_check.textContent = book.read_or_not ? 'Read' : 'Not Read';
-        read_check.classList.toggle('read');
-        read_check.classList.toggle('unread');
+    read_check.onclick = function() {
+        // Only update count if the status is toggling from read to unread or vice versa
+        let previousStatus = book.read_or_not;
+        book.read_or_not = !book.read_or_not;
+    
+        if (previousStatus !== book.read_or_not) {
+            updateCount(book);  // Update count only if status changed
+            read_check.textContent = book.read_or_not ? 'Read' : 'Not Read';
+            read_check.classList.toggle('read');
+            read_check.classList.toggle('unread');
+        }
     }
 
     delete_btn.src = 'https://www.svgrepo.com/show/459913/delete-alt.svg'
@@ -165,8 +173,6 @@ books.forEach(book => {
 // Add books to myLibrary and update logs
 myLibrary.push(...books);
 updateLogs();
-
-
 
 
 saveBook.onclick = function () {
