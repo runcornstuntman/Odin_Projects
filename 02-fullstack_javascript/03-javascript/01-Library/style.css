@@ -34,7 +34,7 @@ body {
 }
 
 .header{
-    background-color: #88C6BA;
+    background-color: #8889c6;
     padding:10px;
     display:flex;
     align-items: center;
@@ -74,7 +74,7 @@ body {
 .books {
     height:220px;
     width:450px;
-    background-color:white;
+    background-color:rgb(255, 255, 255);
     border-radius: 15px;
     font-family: var(--main-font);
     font-weight: var(--font-weight);
@@ -154,29 +154,19 @@ body {
 }
 
 .footer{
-    display:grid;
-    grid-template-columns: 1fr 140px;
+    display: grid;
+    grid-template-columns: 1fr auto;  /* Simplified layout */
     align-items: center;
-    padding:10px;
+    padding: 10px;
+    gap: 15px;  /* Adjusted gap between elements */
 }
 
 .footer :first-child {
-    font-family:var(--footer-font);
-    display:flex;
+    font-family: var(--footer-font);
+    display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
-}
-
-.footer a {
-    color:black;
-    text-decoration: none;
-    font-weight:bolder;
-}
-
-#github{
-    height:30px;
-    width:30px;
 }
 
 .footer > div {
@@ -185,24 +175,31 @@ body {
 }
 
 #openForm {
-    padding:0;
-    background-color:white;
-    font-size:large;
-    font-weight:bold;
+    padding: 0;
+    background-color: white;
+    font-size: large;
+    font-weight: bold;
     font-family: var(--main-font);
-    border-radius:8px;
-    height:50px;
-    display:flex;
+    border-radius: 8px;
+    height: 50px;
+    width: 100px;
+    display: flex;
     align-items: center;
-    justify-content: end;
-    transition:.2s ease-in;
-    transform:scale(1);
+    justify-content: left;
+    transition: .2s ease-in;
+    transform: scale(1);
 }
 
 #openForm:hover {
-    transition:.2s ease-in-out;
+    transition: .2s ease-in-out;
     transform: scale(1.1);
 }
+
+#openForm img {
+    height: 40px;
+    width: 40px;
+}
+
 
 .footer > button > img {
     height:40px;

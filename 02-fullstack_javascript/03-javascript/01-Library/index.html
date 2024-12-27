@@ -8,7 +8,6 @@
 
 </head>
 <body>
-
     <div class="main">
         <div class="header">
             <h2>Odin's Library</h2>
@@ -17,11 +16,11 @@
         <div class="bookshelf collection"></div>
 
         <div class="footer">
-            <button id="openForm">Add Book<img src="https://www.svgrepo.com/show/522437/plus.svg" alt=""></button>
-            <div class="user_statistics">
-                <div></div>
-                <div></div>
-                <div></div>
+            <button id="openForm">Add Book<img src="https://www.svgrepo.com/show/522437/plus.svg" alt="Add Book form"></button>
+            <div class="logs">
+                <p>Total books: 0</p>
+                <p>Read books: 0</p>
+                <p>Unread books: 0</p>
             </div>
         </div>
     </div>
@@ -30,16 +29,14 @@
         <button class="close" id="closeButton">&times;</button>
         <div class="form">
             <form>
-                <div><label for="title">Book Name</label><input id="bookname" type="text" required></div>
+                <div><label for="title">Book Name</label><input id="title" type="text" required></div>
                 <div><label for="author">The author</label><input id="author" type="text" required></div>
-                <div><label for="pages">Number of pages</label><input id="pages" type="number" required></div>
+                <div><label for="pages">Number of pages</label><input id="page_numbers" type="number" required></div>
                 <div><input id="read_or_not" type="checkbox" ><label for="read">Have you read it ?</label></div>
                 <button type="button" id="saveBook">Save Book</button>
             </form>
         </div>
     </div>
-
-
 
     <div id="overlay"></div>
 

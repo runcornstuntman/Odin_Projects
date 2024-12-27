@@ -5,7 +5,7 @@ const myLibrary = []
 function Book(title, author, page_numbers, read_or_not) {
     this.title = title;
     this.author = author;
-    this.page_numbers = page_numbers;
+    this.page_numbers = parseInt(page_numbers);
     this.read_or_not = read_or_not;
 
     this.info = function() {
@@ -14,17 +14,12 @@ function Book(title, author, page_numbers, read_or_not) {
 }
 
 // Declaring some books to myLibrary
-let book1 = new Book("Jurassic Park", "Michael Crichton", "458", false);
-let book2 = new Book("1984", "George Orwell", "311", false);
-let book3 = new Book("Designing Data-Intensive Applications", "Martin Kleppmann", "552", true);
-let book4 = new Book("Clean Code", "Robert C Martin 'Uncle Bob'", "411", true);
+const book1 = new Book("Jurassic Park", "Michael Crichton", "458", false);
+const book2 = new Book("1984", "George Orwell", "311", false);
+const book3 = new Book("Designing Data-Intensive Applications", "Martin Kleppmann", "552", true);
+const book4 = new Book("Clean Code", "Robert C Martin 'Uncle Bob'", "411", true);
 
-function addBookToLibrary(book) {
-    myLibrary.push(book)
-}
-
-
-
+// Dom Element modifications
 let openForm = document.getElementById('openForm')
 let closeButton = document.getElementById('closeButton')
 let overlay = document.getElementById('overlay')
@@ -49,8 +44,21 @@ closeButton.onclick = function(){
     PopWindow.classList.remove('active')
 }
 
-let readBooks = 0
-let unreadBooks = 0
+let readBooks = 0;
+let unreadBooks = 0;
+
+function addBookToLibrary(book) {
+    myLibrary.push(book);
+    updateBookCount(book, true);
+    createBook(book.title, book.author, book.page_numbers, book.read_or_not);
+}
+
+function updateLogs() {
+    logs.firstElementChild.textContent = `Total books: ${myLibrary.length}`;
+    document.querySelector('.logs > :nth-child(2)').textContent = `Read books: ${readBooks}`;
+    document.querySelector('.logs > :last-child').textContent = `Unread books: ${unreadBooks}`;
+}
+
 
 function bookCount(book){
     if (book.read_or_not == true){
@@ -61,17 +69,31 @@ function bookCount(book){
     }
 }
 
-
-function removeCount(book){
-    logs.firstElementChild.textContent = `Total books: ${myLibrary.length}`
-    if (book.read_or_not == true) {
-        document.querySelector('.logs > :nth-child(2)').textContent = `Read Books: ${--readBooks}`
+function removeCount(book) {
+    if (book.read_or_not) {
+        readBooks--;
+    } else {
+        unreadBooks--;
     }
-    else if (book.read_or_not == false){
-        document.querySelector('.logs > :last-child').textContent = `Unread books : ${--unreadBooks}`
-    }
+    updateLogs();
 }
 
+function updateBookCount(book, isAdding) {
+    if (isAdding) {
+        if (book.read_or_not) {
+            readBooks++;
+        } else {
+            unreadBooks++;
+        }
+    } else {
+        if (book.read_or_not) {
+            readBooks--;
+        } else {
+            unreadBooks--;
+        }
+    }
+    updateLogs();
+}
 
 function updateCount(book){
     if(book.read_or_not == true && readBooks != 0){
@@ -84,12 +106,20 @@ function updateCount(book){
     }
 }
 
-function createBook(name,author,pages,read){
-    let bookCard = document.createElement('div')
-    bookCard.classList.add('books')
-    collection.appendChild(bookCard)
-    let book = new Book(name,author,pages,read)
-    addBookToLibrary(book)
+
+function createBook(name, author, pages, read) {
+    let pageCount = parseInt(pages);
+
+    // Check if page count is valid (positive number)
+    if (pageCount <= 0) {
+        alert("The page count must be a positive number.");
+        return;
+    }
+
+    let book = new Book(name, author, pages, read);
+    let bookCard = document.createElement('div');
+    bookCard.classList.add('books');
+    collection.appendChild(bookCard);
 
     let bookTitle = document.createElement('p')
     let bookAuthor = document.createElement('p')
@@ -97,38 +127,19 @@ function createBook(name,author,pages,read){
     let read_check = document.createElement('button')
     let delete_btn = document.createElement('img')
 
+    bookTitle.textContent = book.title
+    bookAuthor.textContent = `By ${book.author}`;
+    bookPages.textContent = `${book.page_numbers} pages`;
 
-
-    bookTitle.innerHTML = book.title
-    bookAuthor.innerHTML = `By ${book.author}`;
-    bookPages.innerHTML = `${book.pages} pages`;
-
-    read == true ? read_check.textContent = 'Read' : read_check.textContent = 'Not read';
-
-    if(read == true){
-        read_check.textContent = 'Read'
-        read_check.classList.add('read')
-        bookCount(book)
-    }
-    else {
-        read_check.textContent = 'Not read'
-        read_check.classList.add('unread')
-        bookCount(book)
-    }
-
+    read_check.textContent = book.read_or_not ? 'Read' : 'Not Read';
+    read_check.classList.add(book.read_or_not ? 'read' : 'unread');
 
     read_check.onclick = function(){
+        book.read_or_not = !book.read_or_not; 
         updateCount(book);
-        book.read_or_not = !book.read_or_not;
-        if (book.read_or_not) {
-            read_check.textContent = 'Read';
-            read_check.classList.remove('unread');
-            read_check.classList.add('read');
-        } else {
-            read_check.textContent = 'Not read';
-            read_check.classList.remove('read');
-            read_check.classList.add('unread');
-        }
+        read_check.textContent = book.read_or_not ? 'Read' : 'Not Read';
+        read_check.classList.toggle('read');
+        read_check.classList.toggle('unread');
     }
 
     delete_btn.src = 'https://www.svgrepo.com/show/459913/delete-alt.svg'
@@ -137,25 +148,38 @@ function createBook(name,author,pages,read){
         myLibrary.splice(myLibrary.indexOf(book),1)
         removeCount(book)
     } 
-                                     
-    bookCard.append(bookTitle,bookAuthor,bookPages,read_check,delete_btn)
-    logs.firstElementChild.textContent = `Total books : ${myLibrary.length}`
+
+    bookCard.append(bookTitle, bookAuthor, bookPages, read_check, delete_btn);
 }
 
-createBook(book1.name,book1.author,book1.page_numbers,book1.read_or_not);
-createBook(book2.name,book2.author,book2.page_numbers,book2.read_or_not);
-createBook(book3.name,book3.author,book3.page_numbers,book3.read_or_not);
-createBook(book4.name,book4.author,book4.page_numbers,book4.read_or_not);
+
+createBook(book1.title, book1.author, book1.page_numbers, book1.read_or_not);
+createBook(book2.title, book2.author, book2.page_numbers, book2.read_or_not);
+createBook(book3.title, book3.author, book3.page_numbers, book3.read_or_not);
+createBook(book4.title, book4.author, book4.page_numbers, book4.read_or_not);
 
 
 saveBook.onclick = function () {
+    console.log('Save button clicked');
+    let pageCount = parseInt(bookPages.value);
+
+
     if (bookTitle.value && bookAuthor.value && bookPages.value) {
-        createBook(bookTitle.value, bookAuthor.value, bookPages.value, readCheck.checked);
+        if (pageCount <= 0) {
+            alert("The page count must be a positive number.");
+            return; // Exit function if page count is invalid
+        }
+
+        let newBook = new Book(bookTitle.value, bookAuthor.value, pageCount, readCheck.checked);
+        addBookToLibrary(newBook);
+
+        // Close and reset the form input fields
         overlay.classList.remove('active');
         PopWindow.classList.remove('active');
         bookTitle.value = '';
         bookAuthor.value = '';
         bookPages.value = '';
         readCheck.checked = false;
+        updateLogs();
     }
-};
+}
