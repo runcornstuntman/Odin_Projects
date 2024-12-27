@@ -51,23 +51,16 @@ function addBookToLibrary(book) {
     myLibrary.push(book);
     updateBookCount(book, true);
     createBook(book.title, book.author, book.page_numbers, book.read_or_not);
+    updateLogs();
 }
 
 function updateLogs() {
-    logs.firstElementChild.textContent = `Total books: ${myLibrary.length}`;
-    document.querySelector('.logs > :nth-child(2)').textContent = `Read books: ${readBooks}`;
-    document.querySelector('.logs > :last-child').textContent = `Unread books: ${unreadBooks}`;
+    const logElements = document.querySelectorAll('.logs p');
+    logElements[0].textContent = `Total books: ${myLibrary.length}`;
+    logElements[1].textContent = `Read books: ${readBooks}`;
+    logElements[2].textContent = `Unread books: ${unreadBooks}`;
 }
 
-
-function bookCount(book){
-    if (book.read_or_not == true){
-        document.querySelector('.logs > :nth-child(2)').textContent = `Read books: ${++readBooks}`
-    }
-    else if (book.read_or_not == false){
-        document.querySelector('.logs > :nth-child(2)').textContent = `Unread books: ${++unreadBooks}`
-    }
-}
 
 function removeCount(book) {
     if (book.read_or_not) {
@@ -134,6 +127,8 @@ function createBook(name, author, pages, read) {
     read_check.textContent = book.read_or_not ? 'Read' : 'Not Read';
     read_check.classList.add(book.read_or_not ? 'read' : 'unread');
 
+    // bookCount(book);
+
     read_check.onclick = function(){
         book.read_or_not = !book.read_or_not; 
         updateCount(book);
@@ -144,19 +139,34 @@ function createBook(name, author, pages, read) {
 
     delete_btn.src = 'https://www.svgrepo.com/show/459913/delete-alt.svg'
     delete_btn.onclick = function(){
-        collection.removeChild(bookCard)
-        myLibrary.splice(myLibrary.indexOf(book),1)
-        removeCount(book)
+        collection.removeChild(bookCard);
+        myLibrary.splice(myLibrary.indexOf(book),1);
+        removeCount(book);
+        updateLogs();
     } 
 
     bookCard.append(bookTitle, bookAuthor, bookPages, read_check, delete_btn);
 }
 
 
-createBook(book1.title, book1.author, book1.page_numbers, book1.read_or_not);
-createBook(book2.title, book2.author, book2.page_numbers, book2.read_or_not);
-createBook(book3.title, book3.author, book3.page_numbers, book3.read_or_not);
-createBook(book4.title, book4.author, book4.page_numbers, book4.read_or_not);
+// Create an array of books as placeholders and loop through the creation
+const books = [
+    new Book("Jurassic Park", "Michael Crichton", "458", false),
+    new Book("1984", "George Orwell", "311", false),
+    new Book("Designing Data-Intensive Applications", "Martin Kleppmann", "552", true),
+    new Book("Clean Code", "Robert C Martin 'Uncle Bob'", "411", true)
+];
+
+books.forEach(book => {
+    createBook(book.title, book.author, book.page_numbers, book.read_or_not);
+    updateBookCount(book, true);
+});
+
+// Add books to myLibrary and update logs
+myLibrary.push(...books);
+updateLogs();
+
+
 
 
 saveBook.onclick = function () {
