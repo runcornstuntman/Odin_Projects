@@ -4,16 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Document</title>
+    <title>Project: Library</title>
+
 </head>
 <body>
 
-    <div class="bookshelf">
-        
+    <div class="main">
+        <div class="header">
+            <h2>Odin's Library</h2>
+        </div>
+    
+        <div class="bookshelf collection"></div>
+
+        <div class="footer">
+            <button id="openForm">Add Book<img src="https://www.svgrepo.com/show/522437/plus.svg" alt=""></button>
+            <div class="user_statistics">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="popup_form">
+        <button class="close" id="closeButton">&times;</button>
+        <div class="form">
+            <form>
+                <div><label for="title">Book Name</label><input id="bookname" type="text" required></div>
+                <div><label for="author">The author</label><input id="author" type="text" required></div>
+                <div><label for="pages">Number of pages</label><input id="pages" type="number" required></div>
+                <div><input id="read_or_not" type="checkbox" ><label for="read">Have you read it ?</label></div>
+                <button type="button" id="saveBook">Save Book</button>
+            </form>
+        </div>
     </div>
 
 
 
+    <div id="overlay"></div>
 
     <script src="script.js"></script>
 </body>
